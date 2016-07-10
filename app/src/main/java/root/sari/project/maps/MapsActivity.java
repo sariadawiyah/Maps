@@ -33,6 +33,13 @@ public class MapsActivity extends AppCompatActivity {
         initMap();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_main_actions, menu);
+
+        return super.onCreateOptionsMenu(menu);
+
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         gMap = mapFragment.getMap();
