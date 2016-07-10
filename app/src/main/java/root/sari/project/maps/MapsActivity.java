@@ -19,7 +19,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends AppCompatActivity {
 
-    private GoogleMap mMap;
+   
 
     static final LatLng Kalibaru = new LatLng(-6.225826, 106.984660);
     private GoogleMap gMap;
