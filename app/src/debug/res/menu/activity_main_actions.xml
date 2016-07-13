@@ -1,0 +1,26 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:maps="http://schemas.android.com/apk/res-auto">s
+    <item android:id="@+id/wilayah"
+        android:title="Wilayah"
+        android:icon="@drawable/cast_ic_notification_0"
+        android:showAsAction="ifRoom">
+        <menu>
+            <group	android:checkableBehavior="single">
+                <item	android:id="@+id/satu"
+                    android:checked="true"
+                    android:title="DKI Jakarta" />
+                <item	android:id="@+id/dua"
+                    android:title="Jakarta Timur" />
+                <item	android:id="@+id/tiga"
+                    android:title="Jakarta Barat" />
+                <item	android:id="@+id/empat"
+                    android:title="Jakarta Selatan" />
+                <item	android:id="@+id/lima"
+                    android:title="Jakarta Utara" />
+                <item	android:id="@+id/enam"
+                    android:title="Jakarta Pusat" />
+            </group>
+        </menu>
+    </item>
+
+</menu>

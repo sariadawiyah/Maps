@@ -1,11 +1,21 @@
 package root.sari.project.maps;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,11 +29,15 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends AppCompatActivity {
-
-
+    String p1, p2, p3, p4;
 
     static final LatLng Kalibaru = new LatLng(-6.225826, 106.984660);
     private GoogleMap gMap;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
 
     @Override
@@ -31,6 +45,9 @@ public class MapsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         initMap();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -39,6 +56,61 @@ public class MapsActivity extends AppCompatActivity {
         inflater.inflate(R.menu.activity_main_actions, menu);
 
         return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // TODO Auto-generated method stub
+        switch(item.getItemId())
+        {
+            case R.id.satu:
+                if(item.isChecked()) item.setChecked(false);
+                else item.setChecked(true);
+                gMap.clear();
+                addPolyLine1();
+
+                return true;
+
+            case R.id.dua:
+                if(item.isChecked()) item.setChecked(false);
+                else item.setChecked(true);
+                gMap.clear();
+                addPolyLine2();
+
+                return true;
+
+            case R.id.tiga:
+                if(item.isChecked()) item.setChecked(false);
+                else item.setChecked(true);
+                gMap.clear();
+                addPolyLine3();
+
+                return true;
+
+            case R.id.empat:
+                if(item.isChecked()) item.setChecked(false);
+                else item.setChecked(true);
+                gMap.clear();
+                addPolyLine4();
+                return true;
+
+            case R.id.lima:
+                if(item.isChecked()) item.setChecked(false);
+                else item.setChecked(true);
+                gMap.clear();
+                addPolyLine1();
+                addPolyLine2();
+                addPolyLine3();
+                addPolyLine4();
+                return true;
+
+
+
+
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
 
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -50,55 +122,159 @@ public class MapsActivity extends AppCompatActivity {
         addPolyLine2();
         addPolyLine3();
         addPolyLine4();
+        gMap.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener() {
+            @Override
+            public void onPolylineClick(Polyline polyline) {
+
+
+            if(polyline.getId().equals(p1)){
+
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(MapsActivity.this);
+                alertDialog.setTitle("Ini isi polyline1");
+
+
+                alertDialog.setMessage("Isi Sendiri");
+
+
+                alertDialog.setPositiveButton("Tutup", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                    }
+                });
+
+
+                alertDialog.show();
+
+
+            }
+
+            else if(polyline.getId().equals(p2)){
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(MapsActivity.this);
+                alertDialog.setTitle("Ini isi polyline2");
+
+
+                alertDialog.setMessage("Isi Sendiri");
+
+
+                alertDialog.setPositiveButton("Tutup", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+
+
+
+                alertDialog.show();
+
+
+            }
+
+
+            else if(polyline.getId().equals(p3)){
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(MapsActivity.this);
+                alertDialog.setTitle("Ini isi polyline3");
+
+
+                alertDialog.setMessage("Isi Sendiri");
+
+
+                alertDialog.setPositiveButton("Tutup", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+
+
+
+                alertDialog.show();
+
+
+            }
+
+
+            else if(polyline.getId().equals(p4)){
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(MapsActivity.this);
+                alertDialog.setTitle("Ini isi polyline4");
+
+
+                alertDialog.setMessage("Isi Sendiri");
+
+
+                alertDialog.setPositiveButton("Tutup", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+
+
+
+                alertDialog.show();
+
+
+            }
+
+
+
+
+
+
+        }
+
+        });
     }
 
     private void addPolyLine1() {
-        Polyline polyline = gMap.addPolyline(new PolylineOptions()
-                        .add(new LatLng(-6.227737, 106.987248),
-                                new LatLng(-6.228956, 106.988954),
-                                new LatLng(-6.229497, 106.989844),
-                                new LatLng(-6.230476, 106.991435),
-                                new LatLng(-6.230714, 106.991886),
-                                new LatLng(-6.230829, 106.992265),
-                                new LatLng(-6.230884, 106.992604),
-                                new LatLng(-6.230815, 106.994197),
-                                new LatLng(-6.230678, 106.996058),
-                                new LatLng(-6.230655, 106.996747),
-                                new LatLng(-6.230690, 106.997094),
-                                new LatLng(-6.230851, 106.997606),
-                                new LatLng(-6.231027, 106.997994),
-                                new LatLng(-6.231435, 106.998558),
-                                new LatLng(-6.231726, 106.998814),
-                                new LatLng(-6.232979, 106.999667),
-                                new LatLng(-6.232299, 107.000563),
-                                new LatLng(-6.231995, 107.001097),
-                                new LatLng(-6.230872, 107.002572),
-                                new LatLng(-6.230861, 107.002631),
-                                new LatLng(-6.231228, 107.003286),
-                                new LatLng(-6.231546, 107.003808),
-                                new LatLng(-6.231902, 107.004280),
-                                new LatLng(-6.232149, 107.004515),
-                                new LatLng(-6.233115, 107.005215),
-                                new LatLng(-6.233338, 107.005438),
-                                new LatLng(-6.233619, 107.005741),
-                                new LatLng(-6.233773, 107.005857),
-                                new LatLng(-6.234230, 107.006095),
-                                new LatLng(-6.234573, 107.006314),
-                                new LatLng(-6.234744, 107.006371),
-                                new LatLng(-6.235316, 107.006455),
-                                new LatLng(-6.235398, 107.006525),
-                                new LatLng(-6.235477, 107.006756),
-                                new LatLng(-6.235540, 107.006812),
-                                new LatLng(-6.236001, 107.006962),
-                                new LatLng(-6.236653, 107.006429)
+        Polyline polyline1 = gMap.addPolyline(new PolylineOptions()
+                .add(new LatLng(-6.227737, 106.987248),
+                        new LatLng(-6.228956, 106.988954),
+                        new LatLng(-6.229497, 106.989844),
+                        new LatLng(-6.230476, 106.991435),
+                        new LatLng(-6.230714, 106.991886),
+                        new LatLng(-6.230829, 106.992265),
+                        new LatLng(-6.230884, 106.992604),
+                        new LatLng(-6.230815, 106.994197),
+                        new LatLng(-6.230678, 106.996058),
+                        new LatLng(-6.230655, 106.996747),
+                        new LatLng(-6.230690, 106.997094),
+                        new LatLng(-6.230851, 106.997606),
+                        new LatLng(-6.231027, 106.997994),
+                        new LatLng(-6.231435, 106.998558),
+                        new LatLng(-6.231726, 106.998814),
+                        new LatLng(-6.232979, 106.999667),
+                        new LatLng(-6.232299, 107.000563),
+                        new LatLng(-6.231995, 107.001097),
+                        new LatLng(-6.230872, 107.002572),
+                        new LatLng(-6.230861, 107.002631),
+                        new LatLng(-6.231228, 107.003286),
+                        new LatLng(-6.231546, 107.003808),
+                        new LatLng(-6.231902, 107.004280),
+                        new LatLng(-6.232149, 107.004515),
+                        new LatLng(-6.233115, 107.005215),
+                        new LatLng(-6.233338, 107.005438),
+                        new LatLng(-6.233619, 107.005741),
+                        new LatLng(-6.233773, 107.005857),
+                        new LatLng(-6.234230, 107.006095),
+                        new LatLng(-6.234573, 107.006314),
+                        new LatLng(-6.234744, 107.006371),
+                        new LatLng(-6.235316, 107.006455),
+                        new LatLng(-6.235398, 107.006525),
+                        new LatLng(-6.235477, 107.006756),
+                        new LatLng(-6.235540, 107.006812),
+                        new LatLng(-6.236001, 107.006962),
+                        new LatLng(-6.236653, 107.006429)
 
 
-                        ).width(10).color(Color.BLUE)
-        );
+                ).width(10).color(Color.BLUE));
+        polyline1.setClickable(true);
+        p1=polyline1.getId();
+
     }
 
     private void addPolyLine2() {
-        Polyline polyline = gMap.addPolyline(new PolylineOptions()
+        Polyline polyline2 = gMap.addPolyline(new PolylineOptions()
                         .add(new LatLng(-6.342514, 106.922713),
                                 new LatLng(-6.340256, 106.922943),
                                 new LatLng(-6.338654, 106.923115),
@@ -262,11 +438,13 @@ public class MapsActivity extends AppCompatActivity {
 
                         ).width(10).color(Color.GREEN)
         );
+        polyline2.setClickable(true);
+        p2=polyline2.getId();
 
     }
 
     private void addPolyLine3() {
-        Polyline polyline = gMap.addPolyline(new PolylineOptions()
+        Polyline polyline3 = gMap.addPolyline(new PolylineOptions()
                         .add(new LatLng(-6.342514, 106.922713),
                                 new LatLng(-6.340256, 106.922943),
                                 new LatLng(-6.338654, 106.923115),
@@ -430,10 +608,12 @@ public class MapsActivity extends AppCompatActivity {
 
                         ).width(10).color(Color.RED)
         );
+        polyline3.setClickable(true);
+        p3=polyline3.getId();
     }
 
     private void addPolyLine4() {
-        Polyline polyline = gMap.addPolyline(new PolylineOptions()
+        Polyline polyline4 = gMap.addPolyline(new PolylineOptions()
                         .add(new LatLng(-6.339717, 106.944823),
                                 new LatLng(-6.340262, 106.944771),
                                 new LatLng(-6.340428, 106.944696),
@@ -777,8 +957,50 @@ public class MapsActivity extends AppCompatActivity {
 
                         ).width(10).color(Color.YELLOW)
         );
+        polyline4.setClickable(true);
+        p4=polyline4.getId();
 
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Maps Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://root.sari.project.maps/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Maps Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://root.sari.project.maps/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
     }
 }
 
