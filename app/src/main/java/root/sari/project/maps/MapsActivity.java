@@ -101,8 +101,6 @@ public class MapsActivity extends AppCompatActivity implements LocationListener 
         }
 
 
-
-        //initMap();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -128,7 +126,7 @@ public class MapsActivity extends AppCompatActivity implements LocationListener 
 
                     alertDialog.setPositiveButton("Tutup", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            finish();
+
                         }
                     });
 
@@ -149,7 +147,7 @@ public class MapsActivity extends AppCompatActivity implements LocationListener 
 
                     alertDialog.setPositiveButton("Tutup", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            finish();
+
                         }
                     });
 
@@ -172,7 +170,7 @@ public class MapsActivity extends AppCompatActivity implements LocationListener 
 
                     alertDialog.setPositiveButton("Tutup", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            finish();
+
                         }
                     });
 
@@ -195,7 +193,7 @@ public class MapsActivity extends AppCompatActivity implements LocationListener 
 
                     alertDialog.setPositiveButton("Tutup", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            finish();
+
                         }
                     });
 
@@ -277,120 +275,6 @@ public class MapsActivity extends AppCompatActivity implements LocationListener 
 
     }
 
-
-    private void initMap() {
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        gMap = mapFragment.getMap();
-        //gMap.setMyLocationEnabled(true);
-        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Kalibaru, 15));
-        //gMap.setOnPolylineClickListener();
-        addPolyLine1();
-        addPolyLine2();
-        addPolyLine3();
-        addPolyLine4();
-        gMap.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener() {
-            @Override
-            public void onPolylineClick(Polyline polyline) {
-
-
-            if(polyline.getId().equals(p1)){
-
-                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(MapsActivity.this);
-                alertDialog.setTitle("Ini isi polyline1");
-
-
-                alertDialog.setMessage("Isi Sendiri");
-
-
-                alertDialog.setPositiveButton("Tutup", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                    finish();
-                    }
-                });
-
-
-                alertDialog.show();
-
-
-            }
-
-            else if(polyline.getId().equals(p2)){
-
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(MapsActivity.this);
-                alertDialog.setTitle("Ini isi polyline2");
-
-
-                alertDialog.setMessage("Isi Sendiri");
-
-
-                alertDialog.setPositiveButton("Tutup", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-
-
-
-                alertDialog.show();
-
-
-            }
-
-
-            else if(polyline.getId().equals(p3)){
-
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(MapsActivity.this);
-                alertDialog.setTitle("Ini isi polyline3");
-
-
-                alertDialog.setMessage("Isi Sendiri");
-
-
-                alertDialog.setPositiveButton("Tutup", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-
-
-
-                alertDialog.show();
-
-
-            }
-
-
-            else if(polyline.getId().equals(p4)){
-
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(MapsActivity.this);
-                alertDialog.setTitle("Ini isi polyline4");
-
-
-                alertDialog.setMessage("Isi Sendiri");
-
-
-                alertDialog.setPositiveButton("Tutup", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-
-
-
-                alertDialog.show();
-
-
-            }
-
-
-
-
-
-
-        }
-
-        });
-    }
 
     private void addPolyLine1() {
         Polyline polyline1 = gMap.addPolyline(new PolylineOptions()
