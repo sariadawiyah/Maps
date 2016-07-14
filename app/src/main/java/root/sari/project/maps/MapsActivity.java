@@ -1,9 +1,14 @@
 package root.sari.project.maps;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -15,6 +20,8 @@ import android.view.MenuItem;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -28,7 +35,7 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends AppCompatActivity {
+public class MapsActivity extends AppCompatActivity implements LocationListener {
     String p1, p2, p3, p4;
 
     static final LatLng Kalibaru = new LatLng(-6.225826, 106.984660);
@@ -44,10 +51,169 @@ public class MapsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        initMap();
+        // Getting Google Play availability status
+        int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+
+        // Showing status
+        if (status != ConnectionResult.SUCCESS) { // Google Play Services are not available
+
+            int requestCode = 10;
+            Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this, requestCode);
+            dialog.show();
+
+        } else { // Google Play Services are available
+
+            // Getting reference to the SupportMapFragment of activity_main.xml
+            SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+
+            // Getting GoogleMap object from the fragment
+            gMap = fm.getMap();
+
+            // Enabling MyLocation Layer of Google Map
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            gMap.setMyLocationEnabled(true);
+
+            // Getting LocationManager object from System Service LOCATION_SERVICE
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+            // Creating a criteria object to retrieve provider
+            Criteria criteria = new Criteria();
+
+            // Getting the name of the best provider
+            String provider = locationManager.getBestProvider(criteria, true);
+
+            // Getting Current Location
+            Location location = locationManager.getLastKnownLocation(provider);
+
+            if(location!=null){
+                onLocationChanged(location);
+            }
+            locationManager.requestLocationUpdates(provider, 20000, 0, this);
+        }
+
+
+
+        //initMap();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Kalibaru, 15));
+
+        addPolyLine1();
+        addPolyLine2();
+        addPolyLine3();
+        addPolyLine4();
+        gMap.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener() {
+            @Override
+            public void onPolylineClick(Polyline polyline) {
+
+
+                if(polyline.getId().equals(p1)){
+
+                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(MapsActivity.this);
+                    alertDialog.setTitle("Ini isi polyline1");
+
+
+                    alertDialog.setMessage("Isi Sendiri");
+
+
+                    alertDialog.setPositiveButton("Tutup", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+
+
+                    alertDialog.show();
+
+
+                }
+
+                else if(polyline.getId().equals(p2)){
+
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(MapsActivity.this);
+                    alertDialog.setTitle("Ini isi polyline2");
+
+
+                    alertDialog.setMessage("Isi Sendiri");
+
+
+                    alertDialog.setPositiveButton("Tutup", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+
+
+
+                    alertDialog.show();
+
+
+                }
+
+
+                else if(polyline.getId().equals(p3)){
+
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(MapsActivity.this);
+                    alertDialog.setTitle("Ini isi polyline3");
+
+
+                    alertDialog.setMessage("Isi Sendiri");
+
+
+                    alertDialog.setPositiveButton("Tutup", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+
+
+
+                    alertDialog.show();
+
+
+                }
+
+
+                else if(polyline.getId().equals(p4)){
+
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(MapsActivity.this);
+                    alertDialog.setTitle("Ini isi polyline4");
+
+
+                    alertDialog.setMessage("Isi Sendiri");
+
+
+                    alertDialog.setPositiveButton("Tutup", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+
+
+
+                    alertDialog.show();
+
+
+                }
+
+
+
+
+
+
+            }
+
+        });
     }
 
     @Override
@@ -115,7 +281,7 @@ public class MapsActivity extends AppCompatActivity {
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         gMap = mapFragment.getMap();
-        gMap.setMyLocationEnabled(true);
+        //gMap.setMyLocationEnabled(true);
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Kalibaru, 15));
         //gMap.setOnPolylineClickListener();
         addPolyLine1();
@@ -1001,6 +1167,42 @@ public class MapsActivity extends AppCompatActivity {
         );
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+        // Getting latitude of the current location
+        double latitude = location.getLatitude();
+
+        // Getting longitude of the current location
+        double longitude = location.getLongitude();
+
+        // Creating a LatLng object for the current location
+        LatLng latLng = new LatLng(latitude, longitude);
+
+        // Showing the current location in Google Map
+        gMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        // Zoom in the Google Map
+        gMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        // TODO Auto-generated method stub
     }
 }
 
